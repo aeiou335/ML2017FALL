@@ -6,7 +6,7 @@ Created on Thu Jan 11 12:00:05 2018
 """
 import sys
 import numpy as np
-from skimage import data, io, filters, transform
+from skimage import io, filters, transform
 import matplotlib.pyplot as plt
 from numpy.linalg import svd, eig
 
@@ -25,12 +25,13 @@ average = (average * 255).astype(np.uint8)
 io.imsave("test.jpg",average)
 
 img = []
-
+"""
 for i in range(415):
 	new_img = transform.resize(data[i], (128,128))
 	new_img = (new_img * 255).astype(np.uint8)
 	img.append(new_img.flatten())
-x = np.array(img)
+"""
+x = np.array(data)
 #print(img.shape)
 #x = img.flatten()
 print(x.shape)
@@ -52,8 +53,9 @@ for i in range(4):
     io.imsave("face{}.jpg".format(i),(eigenfaces[i]*255).astype(np.uint8))
 """
 #%%
-r = sys.argv[2].split('.')[0]
-construct = x[r] - x_mean
+r = io.imread(sys.argv[2])
+r = r.flatten()
+construct = r - x_mean
 combine = 0
 for i in range(4):
     combine += np.dot(V[i], construct) * V[i]

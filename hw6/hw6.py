@@ -25,9 +25,10 @@ def normalization(X):
     return (X - u) / (std + 1e-10)
 print('load...')
 data = np.load(sys.argv[1])
+
 print("normalize...")
 n_data = normalization(data)
-
+"""
 encoding_dim = 32
 input_img = Input(shape = (784,))
 
@@ -49,6 +50,7 @@ autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 
 autoencoder.fit(n_data, n_data, epochs=300, batch_size=512, shuffle=True, validation_split = 0.1)
 encoder.save("hw6.h5")
+"""
 #%%
 """
 print("pca...")
@@ -57,6 +59,7 @@ x = pca.transform(n_data)
 """
 #%%
 print('kmeans...')
+encoder = load_model("hw6.h5")
 x = encoder.predict(n_data)
 k = KMeans(n_clusters = 2).fit(x)
 

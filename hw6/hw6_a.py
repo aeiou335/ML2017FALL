@@ -31,7 +31,7 @@ for i in range(415):
 	new_img = (new_img * 255).astype(np.uint8)
 	img.append(new_img.flatten())
 """
-x = np.array(data)
+x = np.array(data).reshape(415,600*600*3)
 #print(img.shape)
 #x = img.flatten()
 print(x.shape)
@@ -44,17 +44,10 @@ eigenfaces = V
 print(s.shape)
 print(U.shape)
 print(V.shape)
-"""
-eigenfaces = eigenfaces.reshape(415, 128, 128, 3)
-print(eigenfaces.shape)
-for i in range(4):
-    eigenfaces[i] -= np.min(eigenfaces[i])
-    eigenfaces[i] /= np.max(eigenfaces[i])
-    io.imsave("face{}.jpg".format(i),(eigenfaces[i]*255).astype(np.uint8))
-"""
+
 #%%
-r = io.imread(sys.argv[2])
-r = r.flatten()
+pic = int(sys.argv[2].split('.')[0])
+r = x[pic]
 construct = r - x_mean
 combine = 0
 for i in range(4):
@@ -62,7 +55,7 @@ for i in range(4):
 combine += x_mean    
 combine -= np.min(combine)
 combine /= np.max(combine)
-combine = (combine * 255).astype(np.uint8).reshape(128,128,3)
+combine = (combine * 255).astype(np.uint8).reshape(600,600,3)
     
 io.imsave("reconstruct.jpg".format(r),combine)
 #%%
